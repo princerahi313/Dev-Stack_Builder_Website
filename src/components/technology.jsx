@@ -32,7 +32,7 @@ function Technology() {
           {technologies.map((technology) => {
             const isAdded = stack.some((item) => item.id === technology.id)
             return (
-              <article className="flex min-h-[278px] flex-col rounded-2xl border border-[#edf0f5] bg-white p-5 shadow-[0_4px_12px_rgb(15_23_42_/_3%)]" key={technology.id}>
+              <article className="flex min-h-[278px] flex-col rounded-2xl border border-[#edf0f5] bg-white p-5 shadow-[0_4px_12px_rgb(15_23_42_/_3%)] transition duration-200 hover:-translate-y-1 hover:border-[#f4b5d7] hover:shadow-[0_12px_24px_rgb(219_39_119_/_12%)]" key={technology.id}>
                 <div className="flex items-start justify-between gap-3">
                   <img className="h-7 w-7 object-contain" src={technology.icon} alt={`${technology.name} logo`} />
                   <span className="rounded-full bg-[#eff9ff] px-2.5 py-1 text-[11px] font-bold text-[#259fd6]">{technology.badge}</span>
@@ -71,7 +71,7 @@ function Technology() {
           <button className="mt-5 h-9 w-full rounded-lg border border-[#fecaca] bg-white text-[12px] font-bold text-[#ef4444] transition hover:bg-[#fff1f2] disabled:cursor-not-allowed disabled:opacity-45" type="button" disabled={stack.length === 0} onClick={() => setStack([])}>Remove All</button>
         </aside>
       </div>
-      <ToastContainer position="top-right" autoClose={2500} newestOnTop />
+      <ToastContainer position="bottom-right" autoClose={2500} newestOnTop />
     </section>
   )
 }
