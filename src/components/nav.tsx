@@ -11,7 +11,7 @@ function Nav() {
   const closeMenu = (): void => setMenuOpen(false)
 
   return (
-    <header className="relative z-10 h-[67px] border-b border-[#f1f3f7] bg-white max-[980px]:h-16">
+    <header className="sticky top-0 z-10 h-[67px] border-b border-[#f1f3f7] bg-white max-[980px]:h-16">
       <nav
         className="relative mx-auto flex h-full w-[calc(100%-48px)] max-w-[1248px] items-center max-[980px]:w-[calc(100%-48px)] max-[980px]:max-w-[900px] max-[980px]:gap-3.5 max-[520px]:w-[calc(100%-24px)] max-[520px]:gap-[7px]"
         aria-label="Main navigation"
