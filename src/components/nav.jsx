@@ -13,7 +13,7 @@ function Nav() {
   return (
     <header className="relative z-10 h-[67px] border-b border-[#f1f3f7] bg-white max-[980px]:h-16">
       <nav className="relative mx-auto flex h-full w-[calc(100%-48px)] max-w-[1248px] items-center max-[980px]:w-[calc(100%-48px)] max-[980px]:max-w-[900px] max-[980px]:gap-3.5 max-[520px]:w-[calc(100%-24px)] max-[520px]:gap-[7px]" aria-label="Main navigation">
-        <a className="inline-flex shrink-0 items-center" href="#home" onClick={closeMenu} aria-label="Dev Stack home">
+        <a className="inline-flex shrink-0 items-center max-[980px]:absolute max-[980px]:left-1/2 max-[980px]:-translate-x-1/2" href="#home" onClick={closeMenu} aria-label="Dev Stack home">
           <img className="block h-9 w-[139px] object-contain max-[520px]:h-auto max-[520px]:w-[clamp(94px,29vw,124px)]" src={logo} alt="Dev Stack" />
         </a>
         <div className="ml-[250px] flex flex-1 items-center justify-between max-[980px]:hidden">
