@@ -1,12 +1,13 @@
-import { useState, type SetStateAction } from 'react'
+import { useEffect, useState, type SetStateAction } from 'react'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-import technologyData from '../data/technologies.json'
 import type { TechnologyItem } from '../types/technology'
 
-const technologies = technologyData as TechnologyItem[]
+const technologiesUrl = new URL('../data/technologies.json', import.meta.url).href
 
 function Technology() {
+  const [technologies, setTechnologies] = useState<TechnologyItem[]>([])
+  const [isLoading, setIsLoading] = useState(true)
   const [stack, updateStack] = useState<TechnologyItem[]>([])
   const setStack = (nextStack: SetStateAction<TechnologyItem[]>): void => {
     if (Array.isArray(nextStack) && nextStack.length === 0 && stack.length > 0) toast.info('All technologies removed from your stack.')
@@ -23,6 +24,27 @@ function Technology() {
     if (technology) toast.info(`${technology.name} removed from your stack.`)
   }
 
+  useEffect(() => {
+    let isMounted = true
+
+    const loadTechnologies = async (): Promise<void> => {
+      try {
+        const response = await fetch(technologiesUrl)
+        if (!response.ok) throw new Error('Unable to load technologies')
+
+        const data = await response.json() as TechnologyItem[]
+        if (isMounted) setTechnologies(data)
+      } catch {
+        if (isMounted) toast.error('Unable to load technologies. Please refresh and try again.')
+      } finally {
+        if (isMounted) setIsLoading(false)
+      }
+    }
+
+    void loadTechnologies()
+    return () => { isMounted = false }
+  }, [])
+
   return (
     <section className="mx-auto w-[calc(100%-48px)] max-w-[1248px] py-16 max-[520px]:w-[calc(100%-32px)] max-[520px]:py-12" id="technologies" aria-labelledby="technologies-heading">
       <div className="mb-9">
@@ -34,7 +56,12 @@ function Technology() {
 
       <div className="grid grid-cols-[minmax(0,1fr)_238px] gap-7 max-[980px]:grid-cols-[minmax(0,1fr)_210px] max-[760px]:grid-cols-1">
         <div className="grid grid-cols-3 gap-5 max-[980px]:grid-cols-2 max-[760px]:grid-cols-1">
-          {technologies.map((technology) => {
+          {isLoading ? (
+            <div className="col-span-full flex min-h-[278px] flex-col items-center justify-center gap-3 rounded-2xl border border-[#edf0f5] bg-white text-[#64748b]">
+              <span className="h-8 w-8 animate-spin rounded-full border-4 border-[#e5e7eb] border-t-[#ed2d91]" aria-hidden="true" />
+              <p className="m-0 text-sm font-semibold" role="status">Loading technologies...</p>
+            </div>
+          ) : technologies.map((technology) => {
             const isAdded = stack.some((item) => item.id === technology.id)
             return (
               <article className={`flex min-h-[278px] flex-col rounded-2xl border bg-white p-5 shadow-[0_4px_12px_rgb(15_23_42_/_3%)] transition duration-200 hover:-translate-y-1 ${isAdded ? 'border-[#38bdf8] shadow-[0_8px_20px_rgb(56_189_248_/_16%)]' : 'border-[#edf0f5] hover:border-[#f4b5d7] hover:shadow-[0_12px_24px_rgb(219_39_119_/_12%)]'}`} key={technology.id}>
