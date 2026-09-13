@@ -1,0 +1,79 @@
+import { useState } from 'react'
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+import technologies from '../data/technologies.json'
+
+function Technology() {
+  const [stack, setStack] = useState([])
+
+  const addToStack = (technology) => {
+    if (stack.some((item) => item.id === technology.id)) {
+      toast.warning(`${technology.name} is already in your stack.`)
+      return
+    }
+
+    setStack((currentStack) => [...currentStack, technology])
+    toast.success(`${technology.name} added to your stack.`)
+  }
+
+  const removeFromStack = (id) => {
+    setStack((currentStack) => currentStack.filter((item) => item.id !== id))
+  }
+
+  return (
+    <section className="mx-auto w-[calc(100%-48px)] max-w-[1248px] py-16 max-[520px]:w-[calc(100%-32px)] max-[520px]:py-12" id="technologies" aria-labelledby="technologies-heading">
+      <div className="mb-9">
+        <h2 className="m-0 text-[34px] font-extrabold tracking-[-.045em] text-[#121a2d] max-[520px]:text-[29px]" id="technologies-heading">Explore the <span className="bg-gradient-to-r from-[#ed2d91] to-[#8342ed] bg-clip-text text-transparent">Technologies</span></h2>
+        <p className="mt-1 text-[15px] font-medium text-[#94a3b8]">Pick one technology per category to build your ideal stack.</p>
+      </div>
+
+      <div className="grid grid-cols-[minmax(0,1fr)_238px] gap-7 max-[980px]:grid-cols-[minmax(0,1fr)_210px] max-[760px]:grid-cols-1">
+        <div className="grid grid-cols-3 gap-5 max-[980px]:grid-cols-2 max-[760px]:grid-cols-1">
+          {technologies.map((technology) => {
+            const isAdded = stack.some((item) => item.id === technology.id)
+            return (
+              <article className="flex min-h-[278px] flex-col rounded-2xl border border-[#edf0f5] bg-white p-5 shadow-[0_4px_12px_rgb(15_23_42_/_3%)]" key={technology.id}>
+                <div className="flex items-start justify-between gap-3">
+                  <img className="h-7 w-7 object-contain" src={technology.icon} alt={`${technology.name} logo`} />
+                  <span className="rounded-full bg-[#eff9ff] px-2.5 py-1 text-[11px] font-bold text-[#259fd6]">{technology.badge}</span>
+                </div>
+                <h3 className="mb-1 mt-5 text-[18px] font-extrabold tracking-[-.03em] text-[#172033]">{technology.name}</h3>
+                <p className="m-0 min-h-[60px] text-[12px] font-medium leading-[1.55] text-[#8190a7]">{technology.description}</p>
+                <div className="mt-4 flex items-center justify-between gap-2 text-[11px] font-semibold text-[#7b8aa1]">
+                  <span className="rounded bg-[#f1f5f9] px-2 py-1">{technology.category}</span>
+                  <span className="truncate">{technology.difficulty}</span>
+                  <span className="shrink-0 text-[#f5b61b]">★ <span className="text-[#64748b]">{technology.rating}</span></span>
+                </div>
+                <button className={`mt-4 h-9 w-full rounded-lg text-[12px] font-bold transition ${isAdded ? 'cursor-not-allowed bg-[#e2e8f0] text-[#64748b]' : 'bg-[#111827] text-white hover:bg-[#28354a]'}`} type="button" disabled={isAdded} onClick={() => addToStack(technology)}>
+                  {isAdded ? '✓ Added to Stack' : 'Add to Stack'}
+                </button>
+              </article>
+            )
+          })}
+        </div>
+
+        <aside className="h-fit rounded-2xl border border-[#edf0f5] bg-white p-5 shadow-[0_4px_12px_rgb(15_23_42_/_3%)]" aria-label="Your technology stack">
+          <h2 className="m-0 text-[17px] font-extrabold tracking-[-.03em] text-[#172033]">Your Stack</h2>
+          <p className="mb-4 mt-1 text-[12px] font-medium text-[#94a3b8]">{stack.length} {stack.length === 1 ? 'Technology' : 'Technologies'} Selected</p>
+          {stack.length === 0 ? (
+            <p className="rounded-lg border border-dashed border-[#dbe3ed] px-3 py-6 text-center text-[12px] font-medium leading-5 text-[#94a3b8]">Your stack is empty. Add a technology to begin.</p>
+          ) : (
+            <div className="space-y-2.5">
+              {stack.map((technology) => (
+                <div className="flex items-center gap-2 rounded-lg border border-[#e4eaf2] p-2" key={technology.id}>
+                  <img className="h-7 w-7 shrink-0 object-contain" src={technology.icon} alt="" />
+                  <div className="min-w-0 flex-1"><p className="truncate text-[12px] font-bold text-[#263247]">{technology.name}</p><p className="text-[10px] text-[#94a3b8]">{technology.category}</p></div>
+                  <button className="grid h-6 w-6 shrink-0 place-items-center rounded text-lg font-light text-[#94a3b8] hover:bg-[#fff1f2] hover:text-[#ef4444]" type="button" aria-label={`Remove ${technology.name} from stack`} onClick={() => removeFromStack(technology.id)}>×</button>
+                </div>
+              ))}
+            </div>
+          )}
+          <button className="mt-5 h-9 w-full rounded-lg border border-[#fecaca] bg-white text-[12px] font-bold text-[#ef4444] transition hover:bg-[#fff1f2] disabled:cursor-not-allowed disabled:opacity-45" type="button" disabled={stack.length === 0} onClick={() => setStack([])}>Remove All</button>
+        </aside>
+      </div>
+      <ToastContainer position="top-right" autoClose={2500} newestOnTop />
+    </section>
+  )
+}
+
+export default Technology
