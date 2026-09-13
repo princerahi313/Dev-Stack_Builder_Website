@@ -5,8 +5,8 @@ function Hero() {
     <section className="mx-auto grid min-h-[465px] w-[calc(100%-48px)] max-w-[1248px] grid-cols-[minmax(0,1.15fr)_minmax(340px,.85fr)] items-center py-[76px] pb-[69px] max-[980px]:min-h-[405px] max-[980px]:grid-cols-[minmax(0,1fr)_minmax(275px,.72fr)] max-[980px]:py-[58px] max-[520px]:flex max-[520px]:min-h-0 max-[520px]:w-[calc(100%-32px)] max-[520px]:flex-col-reverse max-[520px]:items-start max-[520px]:py-[38px] max-[520px]:pb-14" id="home" aria-labelledby="hero-heading">
       <div className="pb-0.5">
         <h1 className="m-0 text-[clamp(42px,4.25vw,58px)] font-extrabold leading-[1.03] tracking-[-.052em] text-[#121a2d] max-[980px]:text-[clamp(38px,5.6vw,52px)] max-[520px]:text-[clamp(36px,11.2vw,48px)] max-[520px]:leading-[1.04]" id="hero-heading">
-          Build Your Ideal<br />
-          <span className="inline-block bg-gradient-to-r from-[#ff4c20] via-[#ee278e] to-[#803bed] bg-clip-text text-transparent">Development Stack</span>
+          Build the Perfect<br />
+          <span className="inline-block bg-gradient-to-r from-[#ff4c20] via-[#ee278e] to-[#803bed] bg-clip-text text-transparent">Developer Stack</span>
         </h1>
         <p className="mt-[22px] max-w-[620px] text-[17px] font-medium leading-[1.55] tracking-[-.02em] text-[#64748b] max-[520px]:mt-[17px] max-[520px]:text-[15px]">
           Explore frontend, backend, database, and tooling options,<br className="max-[520px]:hidden" />
