@@ -1,6 +1,7 @@
 import Nav from './components/nav'
 import Hero from './components/hero'
 import Technology from './components/technology'
+import Footer from './components/footer'
 
 function App() {
   return (
@@ -10,6 +11,7 @@ function App() {
         <Hero />
         <Technology />
       </main>
+      <Footer />
     </div>
   )
 }
